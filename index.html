@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculator</title>
-    <script src="calculator.js"></script>
+    <script src="calculator.js" defer></script>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -15,24 +15,24 @@
             <div class="input"></div>
         </div>
         <div class="btngrid">
-            <button class="action" id="clear">CLEAR</button>
-            <button class="action" id="backspace">DELETE</button>
-            <button class="num" id="one">1</button>
-            <button class="num" id="two">2</button>
-            <button class="num" id="three">3</button>
-            <button class="operator" id="+">+</button>
-            <button class="num" id="four">4</button>
-            <button class="num" id="five">5</button>
-            <button class="num" id="six">6</button>
-            <button class="operator" id="-">-</button>
-            <button class="num" id="seven">7</button>
-            <button class="num" id="eight">8</button>
-            <button class="num" id="nine">9</button>
-            <button class="operator" id="*">*</button>
-            <button class="num" id="decimal">.</button> 
-            <button class="num" id="zero">0</button>
-            <button class="operator" id="=">=</button>
-            <button class="operator" id="/">/</button>
+            <button class="action" id="clear" data-input="clear">CLEAR</button>
+            <button class="action" id="backspace" data-input="backspace">DELETE</button>
+            <button class="num" id="one" data-input="1">1</button>
+            <button class="num" id="two" data-input="2">2</button>
+            <button class="num" id="three" data-input="3">3</button>
+            <button class="operator" id="add" data-input="+">+</button>
+            <button class="num" id="four" data-input="4">4</button>
+            <button class="num" id="five" data-input="5">5</button>
+            <button class="num" id="six" data-input="6">6</button>
+            <button class="operator" id="subtract" data-input="-">-</button>
+            <button class="num" id="seven" data-input="7">7</button>
+            <button class="num" id="eight" data-input="8">8</button>
+            <button class="num" id="nine" data-input="9">9</button>
+            <button class="operator" id="multiply" data-input="x">x</button>
+            <button class="num" id="decimal" data-input=".">.</button> 
+            <button class="num" id="zero" data-input="0">0</button>
+            <button class="operator" id="equals" data-input="=">=</button>
+            <button class="operator" id="divide" data-input="/">/</button>
         </div>
     </div>
 </body>

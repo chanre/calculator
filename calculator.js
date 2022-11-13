@@ -32,4 +32,25 @@ function operate(operator, num1, num2) {
     return current;
 }
 
-console.log(operate("-", 3, 4));
+function displayInput(e) {
+    let type = e.target.className;
+    let input = e.target.dataset.input;
+    let text = document.querySelector(".input");
+    let history = document.querySelector(".history");
+    if (type === "num") {
+        operand1 += input;
+        text.textContent = operand1;
+    } else if (type === "operator") {
+        history.textContent += text.textContent + ` ${input} `;
+    } else if (input === "clear") {
+        operand1 = "";
+        history.textContent = "";
+        text.textContent = "";
+    }
+}
+
+let operand1 = "";
+
+
+let buttons = document.querySelectorAll("button");
+buttons.forEach(button => button.addEventListener('click', displayInput));

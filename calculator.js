@@ -23,34 +23,78 @@ function operate(operator, num1, num2) {
         case "-":
             current = subtract(num1, num2);
             break;
-        case "*":
+        case "x":
             current = multiply(num1, num2);
             break;
         case "/":
+            if (num2 === 0) return null;
             current = divide(num1, num2);
     }
     return current;
 }
 
-function displayInput(e) {
-    let type = e.target.className;
-    let input = e.target.dataset.input;
-    let text = document.querySelector(".input");
-    let history = document.querySelector(".history");
-    if (type === "num") {
-        operand1 += input;
-        text.textContent = operand1;
-    } else if (type === "operator") {
-        history.textContent += text.textContent + ` ${input} `;
-    } else if (input === "clear") {
-        operand1 = "";
-        history.textContent = "";
-        text.textContent = "";
+function setOperation(currentOperator, previousOperator) {
+    if (previousOperator) {
+        let operand1 = parseFloat(history.textContent.slice(0, -2));
+        let operand2 = parseFloat(display.textContent);
+        let result = operate(previousOperator, operand1, operand2);
+        history.textContent = `${result} ${currentOperator}`;
+        display.textContent = result;
+        history.dataset.changeOperator = true;
+    } else {
+        let operand1 = display.textContent;
+        history.textContent = `${operand1} ${currentOperator}`;
     }
 }
 
-let operand1 = "";
+function updateOperation(newOperator) {
+    history.textContent = history.textContent.slice(0, -1) + newOperator;
+}
+
+function clearInput(clearAll) {
+    if (clearAll) {
+        history.textContent = "";
+        display.textContent = 0;
+    } else {
+        display.textContent = "";
+    }
+}
 
 
-let buttons = document.querySelectorAll("button");
-buttons.forEach(button => button.addEventListener('click', displayInput));
+function displayInput(number, reset) {
+    if (reset || display.textContent == 0) {
+        clearInput();
+        history.dataset.changeOperator =  false;
+    }
+    display.textContent += number;
+}
+
+const display = document.querySelector(".input");
+const history = document.querySelector(".history");
+const numbers = document.querySelectorAll(".num");
+const operations = document.querySelectorAll(".operator");
+const clear = document.querySelector("#clear");
+
+numbers.forEach(number => number.addEventListener("click", () => {
+    let changeDisplay = history.dataset.changeOperator;
+    if (!history.textContent || changeDisplay === "false") {
+        displayInput(number.dataset.input, false)
+    } else {
+        displayInput(number.dataset.input, true)
+    }
+}));
+
+operations.forEach(operation => operation.addEventListener("click", () => {
+    let changeOperator = history.dataset.changeOperator;
+    if (!history.textContent) {
+        setOperation(operation.dataset.input);
+        history.dataset.changeOperator = true;
+    } else if (changeOperator === "true") {
+        updateOperation(operation.dataset.input);
+    } else {
+        let previousOperator = history.textContent.slice(-1);
+        setOperation(operation.dataset.input, previousOperator);
+    }
+}));
+
+clear.addEventListener("click", () => clearInput(true));

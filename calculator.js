@@ -30,6 +30,7 @@ function backspace() {
 
 function addDecimal() {
     if (display.textContent.includes(".")) return;
+    if (history.textContent.slice(-1) === "=") display.textContent = 0;
     display.textContent += ".";
 }
 
@@ -40,7 +41,7 @@ function setOperation(currentOperator, previousOperator) {
             history.textContent = `${operand1} ${currentOperator}`;
             history.dataset.changeOperator = "true";
             return;
-        }
+        } 
         let operand1 = parseFloat(history.textContent.slice(0, -2));
         let operand2 = parseFloat(display.textContent);
         let result = operate(previousOperator, operand1, operand2);
@@ -106,6 +107,7 @@ function enterInput(e) {
             number = e.dataset.input;
         }
         let changeDisplay = history.dataset.changeOperator;
+        if (history.textContent.slice(-1) === "=") clearInput(true);
         if (display.textContent.slice(0, 1) === "C") {
             clearInput(true);
         } else if (number === ".") {
